@@ -9,8 +9,8 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: '%s - reddit-viewer',
-    title: 'reddit-viewer',
+    titleTemplate: 'TGN Reddit Viewer',
+    title: 'TGN Reddit Viewer',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
