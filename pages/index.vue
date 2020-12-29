@@ -89,11 +89,15 @@
           class="my-2"
           :title="post.title"
           :author="post.author"
+          :author-flair-text="post.author_flair_text"
           :created="post.created_utc"
           :selftext="post.selftext"
           :lazy-src="post.thumbnail"
           :src="post.url"
           :flair-text="post.link_flair_text"
+          :score="post.score"
+          :num-comments="post.num_comments"
+          :num-crossposts="post.num_crossposts"
         />
       </div>
     </v-col>
