@@ -1,26 +1,82 @@
 <template>
   <v-row justify="center">
     <v-col cols="12" sm="8" md="3">
-      <v-card>
-        <v-card-title class="headline justify-center"> Filtering </v-card-title>
-        <v-card-text>
-          <v-text-field
-            v-model="query"
-            filled
-            clearable
-            label="Query"
-            type="text"
-            @click:clear="clearQuery"
-            @keyup.enter="sendMessage()"
-          ></v-text-field>
-        </v-card-text>
-        <v-card-actions class="justify-center">
-          <v-btn ripple @click.once="sendMessage()"> Apply </v-btn>
-        </v-card-actions>
-      </v-card>
+      <v-form v-model="valid">
+        <v-card>
+          <v-card-title class="headline justify-center">
+            Filtering
+          </v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="parameters.subreddit"
+              clearable
+              label="Subreddit"
+              type="text"
+              @click:clear="parameters.subreddit = ''"
+              @keyup.enter="sendMessage()"
+            />
+            <v-text-field
+              v-model="parameters.query"
+              clearable
+              label="Query"
+              type="text"
+              @click:clear="parameters.query = ''"
+              @keyup.enter="sendMessage()"
+            />
+            <v-text-field
+              v-model="parameters.title"
+              clearable
+              label="Title"
+              type="text"
+              @click:clear="parameters.title = ''"
+              @keyup.enter="sendMessage()"
+            />
+            <v-text-field
+              v-model="parameters.selftext"
+              clearable
+              label="Selftext"
+              type="text"
+              @click:clear="parameters.selftext = ''"
+              @keyup.enter="sendMessage()"
+            />
+            <v-text-field
+              v-model="parameters.size"
+              :rules="sizeRules"
+              clearable
+              label="Number of results"
+              type="text"
+              @click:clear="parameters.size = ''"
+              @keyup.enter="sendMessage()"
+            />
+            <v-radio-group v-model="parameters.sort" label="Sorting order">
+              <v-radio label="Ascending order" value="asc" />
+              <v-radio label="Descending order" value="desc" />
+            </v-radio-group>
+            <v-radio-group v-model="parameters.sort_type" label="Sort by:">
+              <v-radio label="Upvotes" value="score" />
+              <v-radio label="Number of comments" value="num_comments" />
+              <v-radio label="Creation time" value="created_utc" />
+            </v-radio-group>
+            <v-text-field
+              v-model="parameters.author"
+              clearable
+              label="Author"
+              type="text"
+              @click:clear="parameters.author = ''"
+              @keyup.enter="sendMessage()"
+            />
+            <!-- TODO: Dates (after, before), score, number of comments -->
+          </v-card-text>
+          <v-card-actions class="justify-center">
+            <v-btn ripple :disabled="!valid" @click.once="sendMessage()">
+              Apply
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-form>
     </v-col>
     <v-col v-if="$fetchState.pending" cols="12" sm="8" md="9">
-      Fetching 25 posts from Pushshift...
+      Fetching {{ parameters.size }} posts from Pushshift...
     </v-col>
     <v-col v-else-if="$fetchState.error" cols="12" sm="8" md="9">
       An error has occurred :( Try reloading the page, or contacting me via
@@ -133,6 +189,12 @@ export default {
     )
   },
   data: () => ({
+    valid: false,
+    sizeRules: [
+      (v) => !!v || 'Required.',
+      (v) => /^\d+$/.test(v) || 'Must be a number!',
+      (v) => v <= 500 || 'Number must be smaller than or equal 500!',
+    ],
     show: false,
     posts: {},
     parameters: {
@@ -164,9 +226,6 @@ export default {
   methods: {
     sendMessage() {
       this.$fetch()
-    },
-    clearQuery() {
-      this.message = ''
     },
   },
 }
