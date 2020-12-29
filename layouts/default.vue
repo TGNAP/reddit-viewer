@@ -28,7 +28,11 @@
       </v-container>
     </v-main>
     <v-footer absolute app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <a href="https://github.com/Wuzado">
+        &copy; {{ new Date().getFullYear() }} Wuzado.
+      </a>
+      <v-spacer />
+      <a href="https://pushshift.io"> Powered by Pushshift. </a>
     </v-footer>
   </v-app>
 </template>
@@ -45,7 +49,7 @@ export default {
           to: '/',
         },
       ],
-      title: 'TGN Reddit Viewer',
+      title: "TGN Archive Project's Reddit Viewer (by Wuzado)",
     }
   },
 }
