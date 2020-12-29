@@ -68,7 +68,7 @@
             <!-- TODO: Dates (after, before), score, number of comments -->
           </v-card-text>
           <v-card-actions class="justify-center">
-            <v-btn ripple :disabled="!valid" @click.once="sendMessage()">
+            <v-btn ripple :disabled="!valid" @click="sendMessage()">
               Apply
             </v-btn>
           </v-card-actions>
