@@ -108,7 +108,7 @@
 export default {
   async fetch() {
     this.posts = await this.$http.$get(
-      'https://api.pushshift.io/reddit/submission/search/' +
+      'https://api.pushshift.io/reddit/submission/search' +
         // Restrict to a specific subreddit
         // String or comma-delimited string (Multiple values allowed)
         '?subreddit=' +
