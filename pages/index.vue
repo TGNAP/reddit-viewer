@@ -48,13 +48,13 @@
               @click:clear="parameters.size = ''"
               @keyup.enter="sendMessage()"
             />
-            <v-radio-group v-model="parameters.sort" label="Sorting order">
+            <v-radio-group v-model="parameters.order" label="Sorting order">
               <v-radio label="Ascending order" value="asc" />
               <v-radio label="Descending order" value="desc" />
             </v-radio-group>
-            <v-radio-group v-model="parameters.sort_type" label="Sort by:">
+            <v-radio-group v-model="parameters.sort" label="Sort by:">
               <v-radio label="Upvotes" value="score" />
-              <v-radio label="Number of comments" value="num_comments" />
+              <v-radio label="ID" value="id" />
               <v-radio label="Creation time" value="created_utc" />
             </v-radio-group>
             <v-text-field
@@ -135,12 +135,12 @@ export default {
         this.parameters.size +
         // Sort results in a specific order
         // "asc", "desc"
+        '&order=' +
+        this.parameters.order +
+        // Sort by a specific attribute
+        // "score", "id", "created_utc"
         '&sort=' +
         this.parameters.sort +
-        // Sort by a specific attribute
-        // "score", "num_comments", "created_utc"
-        '&sort_type=' +
-        this.parameters.sort_type +
         // Restrict to a specific author
         // String or comma-delimited string (Multiple values allowed)
         '&author=' +
@@ -209,8 +209,8 @@ export default {
       selftext: '',
       size: 25,
       fields: '',
-      sort: 'desc',
-      sort_type: 'created_utc',
+      order: 'desc',
+      sort: 'created_utc',
       aggs: '',
       author: '',
       after: '',
